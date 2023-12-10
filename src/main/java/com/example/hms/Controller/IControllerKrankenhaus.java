@@ -1,9 +1,14 @@
 package com.example.hms.Controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import java.util.concurrent.CompletableFuture;
+
 public interface IControllerKrankenhaus {
 
-    public void handleGetTotalBeds();
+    public DeferredResult<ResponseEntity<?>> handleGetTotalBeds();
     public void handleSetTotalBeds(int totalBeds);
-    public void handleGetAvailableBeds();
-    public void handleSetAvailableBeds(int availableBeds);
+    public DeferredResult<ResponseEntity<?>> handleGetAvailableBeds();
+    public DeferredResult<ResponseEntity<?>> handleSetAvailableBeds(int availableBeds);
 }
