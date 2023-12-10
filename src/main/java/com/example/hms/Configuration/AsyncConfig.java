@@ -1,4 +1,4 @@
-package com.example.hms.Config;
+package com.example.hms.Configuration;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
