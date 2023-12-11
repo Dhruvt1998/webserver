@@ -20,9 +20,6 @@ import static com.example.hms.Config.readConfigFile;
 public class HmsApplication {
 
 
-
-
-
 	public static void main(String[] args) {
 		//SpringApplication.run(HmsApplication.class, args);
 
@@ -47,7 +44,3 @@ public class HmsApplication {
 	}
 
 }
-
-
-
-
