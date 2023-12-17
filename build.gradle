@@ -21,6 +21,7 @@ dependencies {
 	implementation 'com.h2database:h2' // H2-Datenbank-Abhängigkeit
 	//developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.json:json:20211205'
 }
 
 tasks.named('test') {
