@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
+
 
 @RestController
 public class ControllerKrankenhaus implements IControllerKrankenhaus{
