@@ -9,5 +9,5 @@ public interface IServerStub {
 void register(String methode);
 void unmarshall (String json);
 void recieve();
-void handleCall (String methodenName, JSONArray parameters);
+void handleCall (Socket client, String methodenName, JSONArray parameters);
 }

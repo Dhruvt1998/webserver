@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,6 +15,7 @@ import java.net.Socket;
 public class ServerStub implements IServerStub{
     private JSONObject jsonObject;
     private ServerSocket serverSocket;
+    private int requestId;
 
 
     public ServerStub(int port) throws IOException {
@@ -29,6 +31,7 @@ public class ServerStub implements IServerStub{
     @Override
     public void unmarshall (String json){
         this.jsonObject = new JSONObject(json);
+        this.requestId = (int) jsonObject.opt("id"); // Extrahieren der ID
     }
 
 
@@ -36,17 +39,18 @@ public class ServerStub implements IServerStub{
     public void recieve() {
         try (Socket client = serverSocket.accept();
              BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                unmarshall(inputLine);
-                handleCall(jsonObject.getString("methodName"), jsonObject.getJSONArray("parameters"));
-            }
+            String inputLine = in.readLine();
+            //while ((inputLine = in.readLine()) != null) {
+            unmarshall(inputLine);
+            handleCall(client, jsonObject.getString("methodName"), jsonObject.getJSONArray("parameters"));
+            System.out.println("Client ist close?: "+client.isClosed());
+            //}
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     @Override
-    public void handleCall(String methodenName, JSONArray parameters) {
+    public void handleCall(Socket client, String methodenName, JSONArray parameters) {
         System.out.println("Handling method call: " + methodenName + " with parameter: " + parameters);
 
         try {
@@ -58,13 +62,40 @@ public class ServerStub implements IServerStub{
             // Suchen Sie die Methode mit dem gegebenen Namen und Parametertypen
             Method method = this.getClass().getDeclaredMethod(methodenName, int.class, String.class);
             // Rufen Sie die Methode mit dem extrahierten Parameterwert auf
-            method.invoke(this, paramValue, paramValue2);
+            Object result = method.invoke(this, paramValue, paramValue2);
+            sendResponse(client, result, jsonObject.opt("id"));
+
         } catch (Exception e) {
+            // Fehlerbehandlung und Senden einer Fehlerantwort
+            sendErrorResponse(client, e.getMessage(), jsonObject.opt("id"));
+        }
+    }
+
+    private void sendErrorResponse(Socket client, String errorMessage, Object id) {
+        try (PrintWriter out = new PrintWriter(client.getOutputStream(), true)) {
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("jsonrpc", "2.0");
+            errorResponse.put("id", id);
+            errorResponse.put("error", errorMessage); // Fehlermeldung
+
+            out.println(errorResponse.toString());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void sendResponse(Socket client, Object result, Object id) {
+        try (PrintWriter out = new PrintWriter(client.getOutputStream(), true)) {
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("jsonrpc", "2.0");
+            jsonResponse.put("id", id);
+            jsonResponse.put("result", result); // oder "error" im Fehlerfall
 
+            out.println(jsonResponse.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) throws IOException, NoSuchMethodException {
         // Starten des ServerStubs in einem separaten Thread
         new Thread(() -> {
