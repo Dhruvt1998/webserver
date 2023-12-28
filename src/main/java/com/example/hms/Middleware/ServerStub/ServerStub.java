@@ -76,7 +76,6 @@ public class ServerStub implements IServerStub{
             }
         }).start();
 
-        // Warten, um sicherzustellen, dass der Server gestartet ist
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -85,14 +84,15 @@ public class ServerStub implements IServerStub{
 
         // Erstellen und Verwenden des ClientStubs
         ClientStub clientStub = new ClientStub("localhost", 12345);
-        Method method = ServerStub.class.getMethod("testMethod", int.class, String.class); // Änderung hier
-        clientStub.invoke(method, 123, "www"); // Beispielswert für den int-Parameter
+        Method method = ServerStub.class.getMethod("testMethod", int.class, String.class);
+        clientStub.invoke(method, 123, "www");
     }
 
 
-    public static void testMethod(int a, String s) {
+    public static int testMethod(int a, String s) {
         System.out.println("Hier bin ich");
         System.out.println("a: "+ a + s);
+        return 1;
     }
 
 }
