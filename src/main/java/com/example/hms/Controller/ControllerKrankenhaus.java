@@ -17,10 +17,6 @@ public class ControllerKrankenhaus implements IControllerKrankenhaus{
     @Autowired
     private KrankenhausService krankenhausService;
 
-    @Override
-    public void handleSetTotalBeds(int totalBeds) {
-
-    }
     @GetMapping("/availableBeds")
     @Override
     public DeferredResult<ResponseEntity<?>> handleGetAvailableBeds() {

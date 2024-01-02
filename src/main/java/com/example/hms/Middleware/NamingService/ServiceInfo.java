@@ -6,13 +6,12 @@ public class ServiceInfo {
 
     private String host;
     private int port;
-    private IService service; // Interface für Ihren Service
 
 
-    public ServiceInfo(String host, int port, IService service) {
+
+    public ServiceInfo(String host, int port) {
         this.host = host;
         this.port = port;
-        this.service = service;
     }
 
     public String getHost() {

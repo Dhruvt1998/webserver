@@ -25,10 +25,8 @@ public class NamingService {
     // Test method to demonstrate usage
     public static void main(String[] args) {
         NamingService namingService = new NamingService();
-        IService TestService = null;
-        IService service = TestService;
         // Register a service
-        namingService.register("myService", new ServiceInfo("localhost", 12345, TestService));
+        namingService.register("myService", new ServiceInfo("localhost", 12345));
 
         // Lookup the service
         ServiceInfo address = namingService.lookup("myService");

@@ -1,5 +1,7 @@
 package com.example.hms.Middleware.ServerStub;
 
+import com.example.hms.Middleware.ApplicationStub.ApplicationStubCallee;
+import com.example.hms.Middleware.ApplicationStub.IApplicationStubCallee;
 import com.example.hms.Middleware.ClientStub.ClientStub;
 import com.example.hms.Service.KrankenhausService;
 import com.example.hms.repository.KrankenhausRepository;
@@ -22,6 +24,9 @@ public class ServerStub implements IServerStub{
     private JSONObject jsonObject;
     private ServerSocket serverSocket;
     private int requestId;
+
+    @Autowired
+    private IApplicationStubCallee applicationStubCallee;
 
 
     public ServerStub(@Value("${serverstub.port}") int port, ApplicationStubCallee applicationStubCallee) throws IOException {
@@ -167,6 +172,6 @@ public class ServerStub implements IServerStub{
         System.out.println("Hier bin ich");
         System.out.println("a: "+ a + s);
         return 1;
-    }
+    }*/
 
 }
