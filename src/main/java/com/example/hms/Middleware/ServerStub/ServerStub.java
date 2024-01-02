@@ -1,6 +1,8 @@
 package com.example.hms.Middleware.ServerStub;
 
 import com.example.hms.Middleware.ClientStub.ClientStub;
+import com.example.hms.Service.KrankenhausService;
+import com.example.hms.repository.KrankenhausRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,11 +137,13 @@ public class ServerStub implements IServerStub{
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws IOException, NoSuchMethodException {
+    /*public static void main(String[] args) throws IOException, NoSuchMethodException {
+        final KrankenhausRepository krankenhausRepository;
         // Starten des ServerStubs in einem separaten Thread
         new Thread(() -> {
             try {
-                ServerStub serverStub = new ServerStub(12345);
+
+                ServerStub serverStub = new ServerStub(12346);
                 serverStub.recieve();
             } catch (IOException e) {
                 e.printStackTrace();

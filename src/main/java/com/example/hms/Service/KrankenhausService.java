@@ -52,7 +52,16 @@ public class KrankenhausService {
     }
 
 
-
+    @Async
+    public CompletableFuture<Void> setTotalBeds(int totalbeds) {
+        return CompletableFuture.runAsync(() -> {
+            Optional<Krankenhaus> optionalKrankenhaus = krankenhausRepository.findById(1);
+            optionalKrankenhaus.ifPresent(krankenhaus -> {
+                krankenhaus.setTotalBeds(totalbeds);
+                krankenhausRepository.save(krankenhaus);
+            });
+        });
+    }
 
 
 

@@ -91,4 +91,31 @@ public class ControllerKrankenhaus implements IControllerKrankenhaus{
 
         return deferredResult;
     }
+
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/setTotalBeds")
+    @Override
+    public DeferredResult<ResponseEntity<?>> handleSetTotalBeds(@RequestParam int totalBeds) {
+        DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>();
+
+        // Asynchronen Service aufrufen
+        CompletableFuture<Void> setTotalBedsFuture = krankenhausService.setTotalBeds(totalBeds);
+
+        // Setze das Ergebnis des DeferredResult, sobald es verfügbar ist
+        setTotalBedsFuture.thenRun(() ->
+                deferredResult.setResult(ResponseEntity.ok("Totale Betten erfolgreich aktualisiert"))
+        ).exceptionally(ex -> {
+            // Fehlerbehandlung
+            deferredResult.setErrorResult(
+                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Fehler bei der Aktualisierung der totalen Betten")
+            );
+            return null;
+        });
+
+        return deferredResult;
+    }
+
+
 }
