@@ -3,9 +3,9 @@ package com.example.hms.Middleware.ServerStub;
 import com.example.hms.Config;
 import com.example.hms.Middleware.ApplicationStub.ApplicationStubCallee;
 import com.example.hms.Middleware.ApplicationStub.IApplicationStubCallee;
-import com.example.hms.Middleware.ClientStub.ClientStub;
-import com.example.hms.Service.KrankenhausService;
-import com.example.hms.repository.KrankenhausRepository;
+import com.example.hms.Middleware.NamingService.AddressInfo;
+import com.example.hms.Middleware.NamingService.INamingService;
+import com.example.hms.Middleware.NamingService.NamingService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,8 @@ public class ServerStub implements IServerStub{
     private INamingService namingService;
 
 
+
+    //TODO: Question
     public ServerStub(@Value("${serverstub.port}") int port, ApplicationStubCallee applicationStubCallee) throws IOException {
         this.serverSocket = new ServerSocket(port);
         this.applicationStubCallee = applicationStubCallee;
@@ -79,8 +81,8 @@ public class ServerStub implements IServerStub{
             // Die Logik zum Aufrufen der entsprechenden Methode im ApplicationStubCallee
             switch (methodName) {
                 case "getAvailableBeds":
-                    // Aufruf der Methode getAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
-                    applicationStubCallee.getAvailableBedsAsync().thenAccept(availableBeds -> {
+                    // Aufruf der Methode getAvailableBeds und Behandlung des CompletableFuture-Ergebnisses
+                    applicationStubCallee.getAvailableBeds().thenAccept(availableBeds -> {
                         sendResponse(client, availableBeds, requestId);
                     }).exceptionally(e -> {
                         sendErrorResponse(client, e.getMessage(), requestId);
@@ -88,9 +90,9 @@ public class ServerStub implements IServerStub{
                     });
                     break;
                 case "setAvailableBeds":
-                    // Aufruf der Methode setAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    // Aufruf der Methode setAvailableBeds und Behandlung des CompletableFuture-Ergebnisses
                     int beds = parameters.getInt(0); // Annahme, dass das erste Element ein Integer ist
-                    applicationStubCallee.setAvailableBedsAsync(beds).thenRun(() -> {
+                    applicationStubCallee.setAvailableBeds(beds).thenRun(() -> {
                         sendResponse(client, "Verfuegbare Bettenanzahl aktualisiert", requestId);
                     }).exceptionally(e -> {
                         sendErrorResponse(client, e.getMessage(), requestId);
@@ -98,8 +100,8 @@ public class ServerStub implements IServerStub{
                     });
                     break;
                 case "getTotalBeds":
-                    // Aufruf der Methode getAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
-                    applicationStubCallee.getTotalBedsAsync().thenAccept(totalBeds -> {
+                    // Aufruf der Methode getAvailableBeds und Behandlung des CompletableFuture-Ergebnisses
+                    applicationStubCallee.getTotalBeds().thenAccept(totalBeds -> {
                         sendResponse(client, totalBeds, requestId);
                     }).exceptionally(e -> {
                         sendErrorResponse(client, e.getMessage(), requestId);
@@ -107,9 +109,9 @@ public class ServerStub implements IServerStub{
                     });
                     break;
                 case "setTotalBeds":
-                    // Aufruf der Methode setAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    // Aufruf der Methode setAvailableBeds und Behandlung des CompletableFuture-Ergebnisses
                     int totalBeds = parameters.getInt(0); // Annahme, dass das erste Element ein Integer ist
-                    applicationStubCallee.setTotalBedsAsync(totalBeds).thenRun(() -> {
+                    applicationStubCallee.setTotalBeds(totalBeds).thenRun(() -> {
                         sendResponse(client, "Totale Bettenanzahl aktualisiert", requestId);
                     }).exceptionally(e -> {
                         sendErrorResponse(client, e.getMessage(), requestId);

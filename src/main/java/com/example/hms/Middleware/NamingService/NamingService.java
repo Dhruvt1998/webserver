@@ -13,8 +13,9 @@ public class NamingService implements INamingService{
         this.services = new ConcurrentHashMap<>();
     }
 
-    public void register(String serviceName, ServiceInfo serviceInfo) {
-        services.put(serviceName, serviceInfo);
+    @Override
+    public void register(String serviceName, AddressInfo addressInfo) {
+        services.put(serviceName, addressInfo);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class NamingService implements INamingService{
         namingService.register("myService", new AddressInfo("localhost", 12345));
 
         // Lookup the service
-        ServiceInfo address = namingService.lookup("myService");
+        AddressInfo address = namingService.lookUp("myService");
         System.out.println("Service Address: " + address);
 
         // Unregister the service

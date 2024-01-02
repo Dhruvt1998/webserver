@@ -8,6 +8,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class Config {
     private static final String CONFIG_FILE_PATH = "src/main/resources/config.json"; // Pfad zur JSON-Datei
@@ -18,6 +19,10 @@ public class Config {
     private String name;
     private int port;
     private int totalBeds;
+
+    private InetAddress ipAddress;
+
+
 
     public int getTotalBeds() {
             return totalBeds;

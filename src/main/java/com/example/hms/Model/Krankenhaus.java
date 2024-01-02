@@ -31,6 +31,14 @@ public  class Krankenhaus implements IModelKrankenhaus{
         // Private Konstruktor, um Instanzierung außerhalb dieser Klasse zu verhindern
     }
 
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     public static Krankenhaus getInstance() {
         if (instance == null) {
             instance = new Krankenhaus();
@@ -70,6 +78,14 @@ public  class Krankenhaus implements IModelKrankenhaus{
 
     public String getName() {
         return name;
+    }
+
+    public InetAddress getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(InetAddress ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public void setName(String name) {

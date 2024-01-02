@@ -19,22 +19,22 @@ public class ApplicationStubCallee implements IApplicationStubCallee{
 
 
     @Override
-    public CompletableFuture<Integer> getAvailableBedsAsync() {
+    public CompletableFuture<Integer> getAvailableBeds() {
         return krankenhausService.getAvailableBeds();
     }
 
     @Override
-    public CompletableFuture<Void> setAvailableBedsAsync(int availableBeds) {
+    public CompletableFuture<Void> setAvailableBeds(int availableBeds) {
         return krankenhausService.setAvailableBeds(availableBeds);
     }
 
     @Override
-    public CompletableFuture<Integer> getTotalBedsAsync() {
+    public CompletableFuture<Integer> getTotalBeds() {
         return krankenhausService.getTotalBeds();
     }
 
     @Override
-    public CompletableFuture<Void> setTotalBedsAsync(int totalBeds) {
+    public CompletableFuture<Void> setTotalBeds(int totalBeds) {
         return krankenhausService.setTotalBeds(totalBeds);
     }
 
