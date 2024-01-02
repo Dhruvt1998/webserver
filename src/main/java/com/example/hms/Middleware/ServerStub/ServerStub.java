@@ -3,6 +3,9 @@ package com.example.hms.Middleware.ServerStub;
 import com.example.hms.Middleware.ClientStub.ClientStub;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,14 +15,16 @@ import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+@Component
 public class ServerStub implements IServerStub{
     private JSONObject jsonObject;
     private ServerSocket serverSocket;
     private int requestId;
 
 
-    public ServerStub(int port) throws IOException {
+    public ServerStub(@Value("${serverstub.port}") int port, ApplicationStubCallee applicationStubCallee) throws IOException {
         this.serverSocket = new ServerSocket(port);
+        this.applicationStubCallee = applicationStubCallee;
     }
 
     @Override
@@ -50,24 +55,58 @@ public class ServerStub implements IServerStub{
         }
     }
     @Override
-    public void handleCall(Socket client, String methodenName, JSONArray parameters) {
-        System.out.println("Handling method call: " + methodenName + " with parameter: " + parameters);
+    public void handleCall(Socket client, String methodName, JSONArray parameters) {
+        System.out.println("Handling method call: " + methodName + " with parameter: " + parameters);
 
         try {
-            // Annahme: es gibt nur einen int-Parameter
-            // Extrahieren Sie den ersten Parameter aus dem JSONArray und wandeln Sie ihn in einen int um
-            int paramValue = parameters.getInt(0); // Geändert, um das erste Element des JSONArray zu verwenden
-            String paramValue2 = parameters.getString(1);
+            // Die Logik zum Aufrufen der entsprechenden Methode im ApplicationStubCallee
+            switch (methodName) {
+                case "getAvailableBeds":
+                    // Aufruf der Methode getAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    applicationStubCallee.getAvailableBedsAsync().thenAccept(availableBeds -> {
+                        sendResponse(client, availableBeds, requestId);
+                    }).exceptionally(e -> {
+                        sendErrorResponse(client, e.getMessage(), requestId);
+                        return null;
+                    });
+                    break;
+                case "setAvailableBeds":
+                    // Aufruf der Methode setAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    int beds = parameters.getInt(0); // Annahme, dass das erste Element ein Integer ist
+                    applicationStubCallee.setAvailableBedsAsync(beds).thenRun(() -> {
+                        sendResponse(client, "Verfuegbare Bettenanzahl aktualisiert", requestId);
+                    }).exceptionally(e -> {
+                        sendErrorResponse(client, e.getMessage(), requestId);
+                        return null;
+                    });
+                    break;
+                case "getTotalBeds":
+                    // Aufruf der Methode getAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    applicationStubCallee.getTotalBedsAsync().thenAccept(totalBeds -> {
+                        sendResponse(client, totalBeds, requestId);
+                    }).exceptionally(e -> {
+                        sendErrorResponse(client, e.getMessage(), requestId);
+                        return null;
+                    });
+                    break;
+                case "setTotalBeds":
+                    // Aufruf der Methode setAvailableBedsAsync und Behandlung des CompletableFuture-Ergebnisses
+                    int totalBeds = parameters.getInt(0); // Annahme, dass das erste Element ein Integer ist
+                    applicationStubCallee.setTotalBedsAsync(totalBeds).thenRun(() -> {
+                        sendResponse(client, "Totale Bettenanzahl aktualisiert", requestId);
+                    }).exceptionally(e -> {
+                        sendErrorResponse(client, e.getMessage(), requestId);
+                        return null;
+                    });
+                    break;
 
-            // Suchen Sie die Methode mit dem gegebenen Namen und Parametertypen
-            Method method = this.getClass().getDeclaredMethod(methodenName, int.class, String.class);
-            // Rufen Sie die Methode mit dem extrahierten Parameterwert auf
-            Object result = method.invoke(this, paramValue, paramValue2);
-            sendResponse(client, result, jsonObject.opt("id"));
-
+                // Fügen Sie hier weitere Fälle für andere Methoden hinzu
+                default:
+                    sendErrorResponse(client, "Unbekannte Methode", requestId);
+            }
         } catch (Exception e) {
             // Fehlerbehandlung und Senden einer Fehlerantwort
-            sendErrorResponse(client, e.getMessage(), jsonObject.opt("id"));
+            sendErrorResponse(client, e.getMessage(), requestId);
         }
     }
 

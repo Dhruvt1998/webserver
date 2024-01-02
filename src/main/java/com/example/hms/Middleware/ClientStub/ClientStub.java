@@ -30,13 +30,6 @@ public class ClientStub implements IClientStub {
     }
 
 
-//    public void marshall2(Method methodAufruf) {
-//        this.json = new JSONObject();
-//        json.put("methodName",methodAufruf.getName());
-//        JSONArray jsonArray = new JSONArray(methodAufruf.getParameters());
-//        json.put("parameter",jsonArray);
-//    }
-
     @Override
     public void marshall(Method methodAufruf, Object... args) {
         this.json = new JSONObject();
