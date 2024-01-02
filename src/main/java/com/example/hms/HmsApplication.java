@@ -1,5 +1,8 @@
 package com.example.hms;
 
+import com.example.hms.Middleware.NamingService.AddressInfo;
+import com.example.hms.Middleware.NamingService.INamingService;
+import com.example.hms.Middleware.NamingService.NamingService;
 import com.example.hms.Model.Krankenhaus;
 import com.example.hms.repository.KrankenhausRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,8 +31,11 @@ public class HmsApplication {
 		Krankenhaus krankenhaus = Krankenhaus.getInstance();
 
 		Config config = readConfigFile();
-
-
+//		INamingService namingService = new NamingService();
+//		AddressInfo addressInfo = new AddressInfo("localhost", config.getPort());
+//		namingService.register();
+		krankenhaus.setPort(config.getPort());
+		krankenhaus.setIpAddress(config.getIpAddress());
 		krankenhaus.setId(config.getID());
 		krankenhaus.setName(config.getName());
 		krankenhaus.setTotalBeds(config.getTotalBeds());

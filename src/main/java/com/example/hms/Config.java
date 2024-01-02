@@ -16,6 +16,7 @@ public class Config {
 //    private static Resource jsonFilePath;
     private int id;
     private String name;
+    private int port;
     private int totalBeds;
 
     public int getTotalBeds() {
@@ -29,18 +30,27 @@ public class Config {
     public String getName() {
         return name;
     }
+    public int getPort() {
+        return port;
+    }
 
-        public void setBedCount(int bedCount) {
-            this.totalBeds = bedCount;
-        }
+    public InetAddress getIpAddress() {
+        return ipAddress;
+    }
+
+
+
+    public void setBedCount(int bedCount) {
+        this.totalBeds = bedCount;
+    }
+
+
     public static Config  readConfigFile() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             // JSON-Datei einlesen und in ein entsprechendes Objekt mappen
             return objectMapper.readValue(new File(CONFIG_FILE_PATH), Config.class);
-
-
         } catch (IOException e) {
             e.printStackTrace();
             return new Config();

@@ -2,14 +2,14 @@ package com.example.hms.Middleware.NamingService;
 
 
 
-public class ServiceInfo {
+public class AddressInfo {
 
     private String host;
     private int port;
 
 
 
-    public ServiceInfo(String host, int port) {
+    public AddressInfo(String host, int port) {
         this.host = host;
         this.port = port;
     }

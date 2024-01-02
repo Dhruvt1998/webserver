@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public class KrankenhausService {
     private final KrankenhausRepository krankenhausRepository;
 
+
     @Autowired
     public KrankenhausService(KrankenhausRepository krankenhausRepository) {
         this.krankenhausRepository = krankenhausRepository;

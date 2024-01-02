@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 //import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Primary;
+
+import java.net.InetAddress;
 //import org.springframework.data.annotation.Id;
 
 @Entity
@@ -22,6 +24,8 @@ public  class Krankenhaus implements IModelKrankenhaus{
     private String name;
     private int totalBeds;
     private int availableBeds;
+    private int port;
+    private InetAddress ipAddress;
 
     private Krankenhaus() {
         // Private Konstruktor, um Instanzierung außerhalb dieser Klasse zu verhindern

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 
 public interface IServerStub {
-void register(String methode);
+void register();
 void unmarshall (String json);
 void recieve();
 void handleCall (Socket client, String methodenName, JSONArray parameters);

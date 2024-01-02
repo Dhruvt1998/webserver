@@ -1,5 +1,6 @@
 package com.example.hms.Middleware.ServerStub;
 
+import com.example.hms.Config;
 import com.example.hms.Middleware.ApplicationStub.ApplicationStubCallee;
 import com.example.hms.Middleware.ApplicationStub.IApplicationStubCallee;
 import com.example.hms.Middleware.ClientStub.ClientStub;
@@ -19,6 +20,8 @@ import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static com.example.hms.Config.readConfigFile;
+
 @Component
 public class ServerStub implements IServerStub{
     private JSONObject jsonObject;
@@ -29,15 +32,22 @@ public class ServerStub implements IServerStub{
     private IApplicationStubCallee applicationStubCallee;
 
 
+    private INamingService namingService;
+
+
     public ServerStub(@Value("${serverstub.port}") int port, ApplicationStubCallee applicationStubCallee) throws IOException {
         this.serverSocket = new ServerSocket(port);
         this.applicationStubCallee = applicationStubCallee;
     }
 
     @Override
-    public void register(String methode){
-        System.out.println("Methode registriert: " + methode);
+    public void register(){
+        //System.out.println("Methode registriert: " + methode);
 
+        Method[] methods = applicationStubCallee.getClass().getMethods();
+        for(int i = 0; i<methods.length; i++){
+            //namingService.register(methods[i].getName(), new AddressInfo("localhost",));
+        }
     }
 
     @Override

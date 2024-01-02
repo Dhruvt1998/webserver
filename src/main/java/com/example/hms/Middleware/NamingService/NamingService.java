@@ -2,8 +2,12 @@ package com.example.hms.Middleware.NamingService;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NamingService {
-    private ConcurrentHashMap<String, ServiceInfo> services;
+public class NamingService implements INamingService{
+    private ConcurrentHashMap<String,AddressInfo> services;
+
+    //TODO: ist das eine Loesung für Key-Problem
+    //private ConcurrentHashMap<String,ConcurrentHashMap<String,AddressInfo>> hospitalGlobalServices;
+
 
     public NamingService() {
         this.services = new ConcurrentHashMap<>();
@@ -13,10 +17,12 @@ public class NamingService {
         services.put(serviceName, serviceInfo);
     }
 
-    public ServiceInfo lookup(String serviceName) {
+    @Override
+    public AddressInfo lookUp(String serviceName) {
         return services.get(serviceName);
     }
 
+    @Override
     public void unregister(String serviceName) {
         services.remove(serviceName);
     }
@@ -24,9 +30,9 @@ public class NamingService {
 
     // Test method to demonstrate usage
     public static void main(String[] args) {
-        NamingService namingService = new NamingService();
+        INamingService namingService = new NamingService();
         // Register a service
-        namingService.register("myService", new ServiceInfo("localhost", 12345));
+        namingService.register("myService", new AddressInfo("localhost", 12345));
 
         // Lookup the service
         ServiceInfo address = namingService.lookup("myService");

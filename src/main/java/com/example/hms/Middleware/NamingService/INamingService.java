@@ -1,6 +1,8 @@
 package com.example.hms.Middleware.NamingService;
 
 public interface INamingService {
-    void lookUp();
-    void register();
+    AddressInfo lookUp(String serviceName);
+    void register(String serviceName, AddressInfo serviceInfo);
+
+    void unregister(String serviceName);
 }

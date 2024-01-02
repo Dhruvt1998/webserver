@@ -17,6 +17,7 @@ public class ApplicationStubCallee implements IApplicationStubCallee{
         this.krankenhausService = krankenhausService;
     }
 
+
     @Override
     public CompletableFuture<Integer> getAvailableBedsAsync() {
         return krankenhausService.getAvailableBeds();
