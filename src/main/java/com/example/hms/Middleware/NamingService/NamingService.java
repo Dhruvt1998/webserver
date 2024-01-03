@@ -2,6 +2,7 @@ package com.example.hms.Middleware.NamingService;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class NamingService implements INamingService{
     private ConcurrentHashMap<String,AddressInfo> services;
 

@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 public class ApplicationStubCallee implements IApplicationStubCallee{
+
     private final KrankenhausService krankenhausService;
     //private  KrankenhausRepository krankenhausRepository;
 

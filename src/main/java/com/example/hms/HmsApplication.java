@@ -1,9 +1,13 @@
 package com.example.hms;
 
+import com.example.hms.Middleware.ApplicationStub.ApplicationStubCallee;
 import com.example.hms.Middleware.NamingService.AddressInfo;
 import com.example.hms.Middleware.NamingService.INamingService;
 import com.example.hms.Middleware.NamingService.NamingService;
+import com.example.hms.Middleware.ServerStub.IServerStub;
+import com.example.hms.Middleware.ServerStub.ServerStub;
 import com.example.hms.Model.Krankenhaus;
+import com.example.hms.Service.KrankenhausService;
 import com.example.hms.repository.KrankenhausRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.grammars.hql.HqlParser;
@@ -29,8 +33,12 @@ public class HmsApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(HmsApplication.class, args);
 		KrankenhausRepository krankenhausRepository = context.getBean(KrankenhausRepository.class);
 		Krankenhaus krankenhaus = Krankenhaus.getInstance();
+		IServerStub serverStub = context.getBean(IServerStub.class);
 
 		Config config = readConfigFile();
+
+		serverStub.register();
+
 //		INamingService namingService = new NamingService();
 //		AddressInfo addressInfo = new AddressInfo("localhost", config.getPort());
 //		namingService.register();

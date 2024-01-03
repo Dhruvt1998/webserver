@@ -6,6 +6,7 @@ import com.example.hms.Middleware.ApplicationStub.IApplicationStubCallee;
 import com.example.hms.Middleware.NamingService.AddressInfo;
 import com.example.hms.Middleware.NamingService.INamingService;
 import com.example.hms.Middleware.NamingService.NamingService;
+import jakarta.annotation.PostConstruct;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class ServerStub implements IServerStub{
     private JSONObject jsonObject;
     private ServerSocket serverSocket;
     private int requestId;
+
+    @Value("${server.port}")
+    private int port;
+
 
     @Autowired
     private IApplicationStubCallee applicationStubCallee;

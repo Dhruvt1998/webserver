@@ -1,8 +1,12 @@
 package com.example.hms.Middleware.ClientStub;
 
 
+import com.example.hms.Middleware.NamingService.AddressInfo;
+import com.example.hms.Middleware.NamingService.INamingService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +18,7 @@ import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Random;
-
+@Component
 public class ClientStub implements IClientStub {
     private JSONObject json;
     private Socket clientSocket;
