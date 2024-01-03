@@ -9,7 +9,7 @@ public class AddressInfo {
 
 
 
-    public AddressInfo(String host, int port) {
+    public AddressInfo(InetAddress host, int port) {
         this.host = host;
         this.port = port;
     }

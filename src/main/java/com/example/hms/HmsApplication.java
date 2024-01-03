@@ -11,6 +11,7 @@ import com.example.hms.Service.KrankenhausService;
 import com.example.hms.repository.KrankenhausRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.grammars.hql.HqlParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -42,6 +43,7 @@ public class HmsApplication {
 //		INamingService namingService = new NamingService();
 //		AddressInfo addressInfo = new AddressInfo("localhost", config.getPort());
 //		namingService.register();
+
 		krankenhaus.setPort(config.getPort());
 		krankenhaus.setIpAddress(config.getIpAddress());
 		krankenhaus.setId(config.getID());

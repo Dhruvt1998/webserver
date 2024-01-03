@@ -1,5 +1,9 @@
 package com.example.hms.Middleware.NamingService;
 
+import org.springframework.stereotype.Component;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -34,8 +38,7 @@ public class NamingService implements INamingService{
     public static void main(String[] args) throws UnknownHostException {
         INamingService namingService = new NamingService();
         // Register a service
-        namingService.register("myService", new AddressInfo("localhost", 12345));
-
+        namingService.register("myService", new AddressInfo(InetAddress.getByName("localhost"), 12345));
         // Lookup the service
         AddressInfo address = namingService.lookUp("myService");
         System.out.println("Service Address: " + address);

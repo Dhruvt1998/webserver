@@ -36,8 +36,7 @@ public class ServerStub implements IServerStub{
 
     @Autowired
     private IApplicationStubCallee applicationStubCallee;
-
-
+    @Autowired
     private INamingService namingService;
 
     @PostConstruct
@@ -49,11 +48,9 @@ public class ServerStub implements IServerStub{
 
     @Override
     public void register(){
-        //System.out.println("Methode registriert: " + methode);
-
         Method[] methods = applicationStubCallee.getClass().getMethods();
         for(int i = 0; i<methods.length; i++){
-            //namingService.register(methods[i].getName(), new AddressInfo("localhost",));
+            namingService.register(methods[i].getName(), new AddressInfo(serverSocket.getInetAddress(),serverSocket.getLocalPort()));
         }
     }
 
