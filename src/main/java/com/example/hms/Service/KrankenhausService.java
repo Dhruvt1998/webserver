@@ -15,7 +15,7 @@ public class KrankenhausService {
     private final KrankenhausRepository krankenhausRepository;
 
 
-    @Autowired
+    @Autowired //das gehört zur Kommunikation!! in einer unterliegenden Schicht.
     public KrankenhausService(KrankenhausRepository krankenhausRepository) {
         this.krankenhausRepository = krankenhausRepository;
     }
