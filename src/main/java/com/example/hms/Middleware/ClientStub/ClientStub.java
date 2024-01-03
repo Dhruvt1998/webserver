@@ -23,9 +23,13 @@ public class ClientStub implements IClientStub {
     private JSONObject json;
     private Socket clientSocket;
 
-    public ClientStub(String host, int port) throws IOException {
-        this.clientSocket = new Socket(host,port);
-    }
+    @Autowired
+    private INamingService namingService;
+
+//    public ClientStub() throws IOException {
+//        AddressInfo addressInfo = namingService.lookUp()
+//        this.clientSocket = new Socket(host,port);
+//    }
 
 
     public void invoke(Method methodenAufruf, Object... args) {

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -39,13 +40,12 @@ public class ServerStub implements IServerStub{
 
     private INamingService namingService;
 
-
-
-    //TODO: Question
-    public ServerStub(@Value("${serverstub.port}") int port, ApplicationStubCallee applicationStubCallee) throws IOException {
+    @PostConstruct
+    public void init() throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.applicationStubCallee = applicationStubCallee;
+        register();
     }
+
 
     @Override
     public void register(){
@@ -165,7 +165,7 @@ public class ServerStub implements IServerStub{
         new Thread(() -> {
             try {
 
-                ServerStub serverStub = new ServerStub(12346);
+                ServerStub serverStub = new ServerStub(12345);
                 serverStub.recieve();
             } catch (IOException e) {
                 e.printStackTrace();

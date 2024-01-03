@@ -2,6 +2,7 @@ package com.example.hms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.file.ConfigurationSource;
+import org.hibernate.type.descriptor.java.InetAddressJavaType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.Resource;

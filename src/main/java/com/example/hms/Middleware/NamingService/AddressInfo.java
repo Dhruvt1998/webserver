@@ -1,10 +1,10 @@
 package com.example.hms.Middleware.NamingService;
 
-
+import java.net.InetAddress;
 
 public class AddressInfo {
 
-    private String host;
+    private InetAddress host;
     private int port;
 
 
@@ -14,7 +14,7 @@ public class AddressInfo {
         this.port = port;
     }
 
-    public String getHost() {
+    public InetAddress getHost() {
         return host;
     }
 

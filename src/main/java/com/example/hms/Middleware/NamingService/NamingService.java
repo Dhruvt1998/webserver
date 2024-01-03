@@ -31,7 +31,7 @@ public class NamingService implements INamingService{
 
 
     // Test method to demonstrate usage
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         INamingService namingService = new NamingService();
         // Register a service
         namingService.register("myService", new AddressInfo("localhost", 12345));
