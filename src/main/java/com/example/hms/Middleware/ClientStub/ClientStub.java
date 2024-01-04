@@ -6,7 +6,6 @@ import com.example.hms.Middleware.NamingService.INamingService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -24,20 +23,18 @@ public class ClientStub implements IClientStub {
     private JSONObject json;
     private Socket clientSocket;
 
-    @Autowired
-    private INamingService namingService;
+    //@Autowired
+    //private INamingService namingService;
 
 
-    //TODO: Parameter aendern!
-    public ClientStub(@Value("${serviceName}")String serviceName) throws IOException {
-        AddressInfo addressInfo = namingService.lookUp(serviceName);
-        this.clientSocket = new Socket(addressInfo.getHost(), addressInfo.getPort());
+    public ClientStub(String host,int port) throws IOException {
+        this.clientSocket = new Socket(host,port);
     }
 
 
-    public void invoke(Method methodenAufruf, Object... args) {
+    public String invoke(Method methodenAufruf, Object... args) {
         marshall(methodenAufruf, args);
-        sendAndReceive();
+        return sendAndReceive();
     }
 
 
@@ -60,7 +57,7 @@ public class ClientStub implements IClientStub {
         return new Random().nextInt(Integer.MAX_VALUE);
     }
     @Override
-    public void sendAndReceive() {
+    public String sendAndReceive() {
         try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
 
@@ -70,9 +67,11 @@ public class ClientStub implements IClientStub {
             // Warten auf die Antwort
             String response = in.readLine();
             System.out.println("Response received: " + response);
+            return response;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
     }
 }
