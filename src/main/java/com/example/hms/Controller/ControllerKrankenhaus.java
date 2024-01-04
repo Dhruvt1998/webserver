@@ -26,6 +26,9 @@ public class ControllerKrankenhaus implements IControllerKrankenhaus{
         // Asynchronen Service aufrufen
         CompletableFuture<Integer> availableBedsFuture = krankenhausService.getAvailableBeds();
 
+
+
+
         // Setze das Ergebnis des DeferredResult, sobald es verfügbar ist
         availableBedsFuture.thenAccept(availableBeds ->
                 deferredResult.setResult(ResponseEntity.ok(availableBeds))
