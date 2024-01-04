@@ -18,7 +18,8 @@ import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Random;
-@Component
+
+//@Component
 public class ClientStub implements IClientStub {
     private JSONObject json;
     private Socket clientSocket;
@@ -73,5 +74,6 @@ public class ClientStub implements IClientStub {
             e.printStackTrace();
             return "";
         }
+
     }
 }

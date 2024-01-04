@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -39,6 +40,7 @@ public class ControllerKrankenhaus implements IControllerKrankenhaus{
 
         return deferredResult;
     }
+
 
 
     @ResponseStatus(HttpStatus.ACCEPTED)
